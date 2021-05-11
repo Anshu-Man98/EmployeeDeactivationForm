@@ -11,7 +11,7 @@ namespace EmployeeDeactivation.Models
         public string TeamName { get; set; }
         public string SponsorFirstName { get; set; }
         public string SponsorLastName { get; set; }
-        public string SponsorEmailD { get; set; }
+        public string SponsorEmailID { get; set; }
         [Key]
         public string SponsorGID { get; set; }
         public string Department { get; set; }

@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using EmployeeDeactivation.Controllers;
 
 namespace EmployeeDeactivation.Models
 {
-    public class Employee
+    public class DeactivatedEmployeeDetails
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }
@@ -15,5 +14,9 @@ namespace EmployeeDeactivation.Models
         [Key]
         public string GId { get; set; }
         public DateTime Date { get; set; }
+        public string TeamName { get; set; }
+        public string SponsorName { get; set; }
+        public string SponsorEmailID { get; set; }
+        public string Department { get; set; }
     }
 }
