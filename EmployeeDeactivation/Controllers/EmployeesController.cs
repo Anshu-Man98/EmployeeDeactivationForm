@@ -51,22 +51,12 @@ namespace EmployeeDeactivation.Controllers
 
 
         [HttpPost]
-        public async Task<JsonResult> AddDetails(string firstName, string lastName, string gId, string email, DateTime lastWorkingDate)
+        [Route("Employees/AddDetails")]
+        public JsonResult AddDetails(string firstName, string lastName, string gId, string email, DateTime lastWorkingDate, string teamsName, string sponsorName, string sponsorEmailId, string sponsorDepartment)
         {
-            var updateStatus = await _employeeDataOperation.AddEmployeeData(firstName, lastName, gId, email, lastWorkingDate);
-            //if(updateStatus==true)
-            //{
-            //    ViewBag.Message = "Deactivation Form has been Submitted Successfully";
-            //}
-            //else
-            //{
-            //    ViewBag.Message = "Deactivation Form Not Submitted Successfully";
-            //}
+            var updateStatus =  _employeeDataOperation.AddEmployeeData(firstName, lastName, gId, email, lastWorkingDate, teamsName, sponsorName, sponsorEmailId, sponsorDepartment);
 
-               return Json("");
-
-            
+               return Json(true); 
         }
-
     }
 }
