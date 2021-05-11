@@ -1,0 +1,19 @@
+﻿
+
+@*<input type="submit" value="Generate PDF" class="Button" id="btn1" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+    $('#btn1').click(function () {
+
+        $.ajax({
+            url: '/Pdf/Index',
+            type: "POST",
+            data: {
+                name: $("#txtName").val()
+            },
+            datatype: "json",
+            
+        });
+    });
+</script>*@
+
