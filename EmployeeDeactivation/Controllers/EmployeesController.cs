@@ -34,12 +34,18 @@ namespace EmployeeDeactivation.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult ActivationPage()
+        {
+            return View();
+        }
+
 
         [HttpGet]
         [Route("Employees/GetSponsorDetails")]
         public JsonResult GetSponsorDetails()
         {
-            return Json(_employeeDataOperation.RetrieveEmployeeData());    
+            return Json(_employeeDataOperation.RetrieveAllSponsorDetails());    
         }
 
 

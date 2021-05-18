@@ -39,6 +39,12 @@ namespace EmployeeDeactivation.Controllers
         {
             _pdfDataOperation.SendPdfAsEmailAttachment( memoryStream,  employeeName, teamName);
         }
+        [HttpGet]
+        [Route("Pdf/SendReminder")]
+        public void SendReminder()
+        {
+            _pdfDataOperation.SendReminderEmail();
+        }
 
 
     }

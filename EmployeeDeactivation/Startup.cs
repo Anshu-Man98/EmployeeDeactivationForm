@@ -14,8 +14,6 @@ using EmployeeDeactivation.Models;
 using EmployeeDeactivation.Interface;
 using EmployeeDeactivation.BusinessLayer;
 using EmployeeDeactivation.Data;
-using System.Threading;
-using System.Timers;
 
 
 namespace EmployeeDeactivation
@@ -53,7 +51,7 @@ namespace EmployeeDeactivation
 
         
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env , Employee employee )
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env )
         {
             if (env.IsDevelopment())
             {
@@ -68,8 +66,6 @@ namespace EmployeeDeactivation
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
-            employee.SetTimer();
 
             app.UseMvc(
                 routes =>
