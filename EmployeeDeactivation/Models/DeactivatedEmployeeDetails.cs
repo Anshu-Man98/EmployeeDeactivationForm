@@ -18,5 +18,6 @@ namespace EmployeeDeactivation.Models
         public string SponsorName { get; set; }
         public string SponsorEmailID { get; set; }
         public string Department { get; set; }
+        
     }
 }

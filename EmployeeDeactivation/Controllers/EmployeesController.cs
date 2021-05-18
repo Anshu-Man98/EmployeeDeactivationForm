@@ -21,17 +21,11 @@ namespace EmployeeDeactivation.Controllers
 {
     public class EmployeesController : Controller
     {
-        private readonly IEmployeeDataOperations _employeeDataOperation;
+        private readonly IEmployeeDataOperation _employeeDataOperation;
 
-        public EmployeesController(IEmployeeDataOperations employeeDataOperation)
+        public EmployeesController(IEmployeeDataOperation employeeDataOperation)
         {
             _employeeDataOperation = employeeDataOperation;
-        }
-
-        [HttpGet]
-        public IActionResult Pdf()
-        {
-            return View();
         }
 
         [HttpGet]
@@ -39,7 +33,6 @@ namespace EmployeeDeactivation.Controllers
         {
             return View();
         }
-
 
 
         [HttpGet]
