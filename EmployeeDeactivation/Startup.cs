@@ -14,11 +14,15 @@ using EmployeeDeactivation.Models;
 using EmployeeDeactivation.Interface;
 using EmployeeDeactivation.BusinessLayer;
 using EmployeeDeactivation.Data;
+using System.Threading;
+using System.Timers;
+
 
 namespace EmployeeDeactivation
 {
     public class Startup
     {
+        private IPdfDataOperation _pdfDataOperation;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,12 +46,14 @@ namespace EmployeeDeactivation
             services.AddDbContext<EmployeeDeactivationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EmployeeDeactivationContext")));
            
-            services.AddScoped<IEmployeeDataOperations, EmployeeDataOperations>();
+            services.AddScoped<IEmployeeDataOperation, EmployeeDataOperation>();
+            services.AddScoped<IPdfDataOperation, PdfDataOperation>();
 
         }
 
+        
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env , Employee employee )
         {
             if (env.IsDevelopment())
             {
@@ -62,6 +68,8 @@ namespace EmployeeDeactivation
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            employee.SetTimer();
 
             app.UseMvc(
                 routes =>
