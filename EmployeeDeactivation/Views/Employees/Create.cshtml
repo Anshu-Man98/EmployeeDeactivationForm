@@ -19,6 +19,16 @@
             
 
         });
+        var x = setInterval(Reminder, 86400000);
+        function Reminder() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("SendReminder","Pdf")',
+                success: function (response) {
+
+                }
+            })
+        }
 
         function GetTeamNames() {
             $.ajax({
@@ -56,9 +66,7 @@
                             $('#sponsorDepartment').val(item.department);
                             $('#sponsorDetails').show();
                             $('#reportingManagerEmail').val(item.reportingManagerEmail);
-                            
-
-                        
+                           
                         }
                     });
                 }
@@ -100,7 +108,6 @@
                                             callback: function (result) {
                                                 if (result) {
                                                     $.ajax({
-
                                                         type: "POST",
                                                         url: '@Url.Action("PdfAttachment", "Pdf")',
                                                         data: { 'memoryStream': response.toString().replace('data:application/pdf;base64,', ''), 'employeeName': $('#employeeFirstName').val() + " " + $('#employeeLastName').val(), 'teamName': $('#teamNames').val()},
@@ -209,9 +216,11 @@
     </script>
 
     <style>
+        
         .header {
             margin-top: 0px;
             padding: 20px;
+            margin-bottom:45px;
             text-align: left;
             background-color: black;
             color: white;
@@ -241,6 +250,106 @@
             background-color: Highlight;
             color: azure;
         }
+        .radioButton{
+
+            margin-left:600px;
+            position:fixed;
+
+        }
+        /* Customize the label (the container) */
+        .container1,.container2 {
+            
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            white-space: nowrap;
+        }
+            .container1{
+                padding-right:20px;
+            }
+            .container1 input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+            .container2 input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height : 16px;
+            width: 16px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+        .container1:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+        .container2:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+        .container1 input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+        .container2 input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: relative;
+            display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .container1 input:checked ~ .checkmark:after {
+            display: block;
+        }
+        .container2 input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .container1 .checkmark:after {
+            top: 4px;
+            left: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .container2 .checkmark:after {
+            top: 4px;
+            left: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        @@media only screen and (max-width:790px){
+            .radioButton {
+                position: relative;
+                margin-left: 30px;
+                padding-bottom:20px;
+            }
+        }
     </style>
 
 
@@ -249,6 +358,19 @@
 <body>
     <h2 class="header">Employee Deactivation Form</h2>
     <br />
+    <div class="radioButton">
+        <label class="container1">
+            Deactivation Form
+            <input id="pp" type="checkbox" checked="checked" onclick="return false;">
+            <span class="checkmark"></span>
+        </label>
+
+        <label class="container2">
+            Activation Form
+            <input type="checkbox" onclick="window.open('@Url.Action("ActivationPage","Employees")')">
+            <span class="checkmark"></span>
+        </label>
+    </div>
     <form class="form-group" action="Create">
 
         <div class="form-group row">
@@ -348,7 +470,7 @@
 
 
         </div>
-        
+
 
         <div class="form-group row" style="padding-left:18px">
             <br />

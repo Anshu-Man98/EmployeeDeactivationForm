@@ -50,24 +50,46 @@ namespace EmployeeDeactivation.BusinessLayer
             var c = bytes;
             MemoryStream stream = new MemoryStream(bytes);
             Attachment file = new Attachment(stream, "Deactivation workflow_" + employeeName + ".pdf", "application/pdf");
+            SendEmail(reportingManagerEmailId,employeeName,false,file);
+
+        }
+
+
+        public void SendReminderEmail()
+        {
+            var employeeDetails = _employeeDataOperation.SavedEmployeeDetails();
+            foreach (var item in employeeDetails)
+            {
+                if (DateTime.Today == item.Date)
+                {
+                    var reportingManagerEmailId = _employeeDataOperation.GetReportingManagerEmailId(item.TeamName);
+                    SendEmail(reportingManagerEmailId, item.Firstname + " " + item.Lastname, true, new Attachment(new MemoryStream(), " "));
+                }
+            }
+
+        }
+        private void SendEmail(string reportingManagerEmail , string employeeName, bool isReminderEmail, Attachment file )
+        {
             MailMessage message = new MailMessage();
-            message.From = new MailAddress("jjffrr453@gmail.com");
-            message.Sender = new MailAddress("jjffrr453@gmail.com");
-            message.To.Add(reportingManagerEmailId);
+            message.From = new MailAddress("dontreplydeactivationworkflow@gmail.com");
+            message.Sender = new MailAddress("dontreplydeactivationworkflow@gmail.com");
+            message.To.Add(reportingManagerEmail);
             message.Subject = "Deactivation workflow initiated";
-            message.Attachments.Add(file);
+            if (isReminderEmail)
+            { 
+                message.Body = "Today is " + employeeName+"'s last working day please check if you have approved the deactivation workflow";
+            }
+            else {
+                message.Attachments.Add(file);
+            }
+            
             message.IsBodyHtml = false;
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.EnableSsl = true;
             smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("jjffrr453@gmail.com", "123star123");
+            smtp.Credentials = new NetworkCredential("dontreplydeactivationworkflow@gmail.com", "Siemens@Banglore98");
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.Send(message);
-        }
-
-        public void SendRemainderEmail()
-        {
-
 
         }
     }

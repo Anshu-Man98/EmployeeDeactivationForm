@@ -18,7 +18,7 @@ namespace EmployeeDeactivation.BusinessLayer
 
     public string GetReportingManagerEmailId(string teamName)
         {
-            var teamDetails = RetrieveEmployeeData();
+            var teamDetails = RetrieveAllSponsorDetails();
             foreach (var item in teamDetails)
             {
                 if(item.TeamName == teamName)
@@ -26,12 +26,32 @@ namespace EmployeeDeactivation.BusinessLayer
                     return item.ReportingManagerEmail;
                 }
             }
-            return "";
-                
+            return "";      
         }
-    
 
-        public List<Teams> RetrieveEmployeeData()
+        public  List<DeactivatedEmployeeDetails> SavedEmployeeDetails()
+        {
+            List<DeactivatedEmployeeDetails> userDetails = new List<DeactivatedEmployeeDetails>();
+            var info =  _context.Employees.ToList();
+            foreach (var item in info)
+            {
+                userDetails.Add(new DeactivatedEmployeeDetails
+                {
+                    Firstname = item.Firstname,
+                    Lastname = item.Lastname,
+                    Email = item.Email,
+                    GId = item.GId,
+                    Date = item.Date,
+                    TeamName = item.TeamName,
+                    SponsorName =item.SponsorName,
+                    SponsorEmailID =item.SponsorEmailID,
+                    Department = item.Department
+                });
+            }
+            return userDetails;
+        }
+
+        public List<Teams> RetrieveAllSponsorDetails()
         {
             List<Teams> teamDetails = new List<Teams>();
             var details = _context.Teams.ToList();
